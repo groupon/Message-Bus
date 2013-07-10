@@ -5,7 +5,7 @@ MessageBus is a distributed messaging platform built on top of hornetq, and supp
 ==Building the server==
 
 ===Check out and patch server===
- $ ./create-hornetq.sh
+ $ ./checkout-hornetq.sh
 
 This step first checks out the Jboss HornetQ project, then applies a patch on top of it. It can take a few minutes depending on your internet speed.
 
