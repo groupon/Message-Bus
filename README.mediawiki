@@ -3,6 +3,9 @@
 MessageBus is a distributed messaging platform built on top of hornetq, and supports java and ruby client. This project includes a patch to HornetQ, and the java and ruby client that works with it.
 
 ==Building the server==
+Prerequisite: 
+* java 6 or higher
+* maven 2
 
 ===Check out and patch server===
  $ ./checkout-hornetq.sh
