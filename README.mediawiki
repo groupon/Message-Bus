@@ -1,4 +1,4 @@
-=message-bus=
+=MessageBus=
 
 MessageBus is a distributed messaging platform built on top of hornetq, and supports java and ruby client. This project includes a patch to HornetQ, and the java and ruby client that works with it.
 
@@ -31,7 +31,7 @@ The server build is located in hornetq/build/hornetq-2.2.22.SNAPSHOT
 ===Configurate the server===
 '''hornetq-server/config''' directory contains several config files that you should be aware of. Refer to [[http://docs.jboss.org/hornetq/2.2.14.Final/user-manual/en/html/configuration-index.html|Hornetq Config]] for documentation of each config file. There are several mandatory fields required for a working cluster:
 
-#'''STOMP connector port'''. MessageBus uses STOMP protocol for communication between clients and servers, and you need to enable it by:
+*'''STOMP connector port'''. MessageBus uses STOMP protocol for communication between clients and servers, and you need to enable it by:
     <acceptors>
       ...
       <acceptor name="stomp-acceptor">
@@ -42,13 +42,13 @@ The server build is located in hornetq/build/hornetq-2.2.22.SNAPSHOT
         <param key="use-nio" value="true" />
       </acceptor>
     </acceptors>
-#'''Persistence directories''' in '''hornetq-configuration.xml'''. You need to point the server to directories that store your journal, paging and bindings. Default is '''/var/hornetq/*'''. You need to create these directories before the server can be started.
+*'''Persistence directories''' in '''hornetq-configuration.xml'''. You need to point the server to directories that store your journal, paging and bindings. Default is '''/var/hornetq/*'''. You need to create these directories before the server can be started.
    <paging-directory>/var/hornetq/paging</paging-directory>
    <bindings-directory>/var/hornetq/bindings</bindings-directory>
    <journal-directory>/var/hornetq/journal</journal-directory>
-#'''Server log location'''. This is configured in logging.properties. You need to have the directory created. Default is:
+*'''Server log location'''. This is configured in '''logging.properties'''. You need to have the directory created. Default is:
  java.util.logging.FileHandler.pattern=/var/hornetq/log/hornetq.log
-#'''jmx directory'''. In log4j.properties, define the file jmx logs to. You need to have the directory created. Default is:
+*'''jmx directory'''. In '''log4j.properties''', defines the file jmx logs to. You need to have the directory created. Default is:
  log4j.appender.jmx.File=/var/hornetq/log/jmx.log
 
 ===Deploy the server===
@@ -66,7 +66,7 @@ Prerequisite: java 6 or higher.
 The publishers and consumers have different visibility of the cluster nodes. This is for operational reason. For example, when you want to add a broker, you want to bring it to consumer list first before directing traffic to the new broker, in order to retain real-time delivery. For more about cluster management see [[https://engineering.groupon.com/2013/hornetq/building-a-distributed-messaging-system/|Building a Distributed Messaging System]].
 
 ====Publiser Cluster Control====
-You will need a load balancer of your choice to direct traffic to your brokers. The purpose of the load balancer is to provide a single host name to distribute TCP/HTTP connections to your brokers. 
+You will need a load balancer of your choice to direct traffic to your brokers. The purpose of the load balancer is to provide a single host name to distribute TCP/HTTP connections to your brokers. [[http://www.a10networks.com/|A10]] is a good hardware solution. A good software solution is [[Haproxy|http://haproxy.1wt.eu/]].
 
 MessageBus servers uses below ports, and you need to config your load balancer to direct traffic to each port:
 
@@ -75,10 +75,25 @@ MessageBus servers uses below ports, and you need to config your load balancer t
 *Health check port: 8083. If your host name is messagebus-hornetq1, then http://messagebus-hornetq1:8083/health returns either a 200 page or 404 page indicating whether the server is up. It reads ''bindings-directory/health.txt'' and returns 200 if exists and 404 otherwise.. ''rm'' or ''touch'' this file to manually control your load balancer. This port number is currently not configurable.
 
 ====Consumer Cluster Control====
-The consumer calls the server on 8081 port for the list of brokers to consume from. It's a file with path: ''''bindings-directory/serverlist.txt''. If your broker list is messagebus-hornetq1, messagebus-hornetq2, messagebus-hornetq3, and the STOMP port is 61613, create this file and write following as content:
+The consumer calls the server on 8081 port for the list of brokers to consume from. It's a file at '''bindings-directory/serverlist.txt'''. If your broker list is messagebus-hornetq1, messagebus-hornetq2, messagebus-hornetq3, and the STOMP port is 61613, create this file and write following:
 
  messagebus-hornetq1:61613
  messagebus_hornetq2:61613
  messagebus-hornetq3:61613
 
-The consumer is configured by default to get this file once every 5 minutes. You can change this file and wait this much time and expect your consumers are consuming from the new list.
+The consumer is configured by default to get this file once every 5 minutes and refreshes connections. You can change this file and wait this much time and expect your consumers are consuming from the new list.
+
+==Using the client==
+Java and Ruby clients are currnetly supported, located in java/ and ruby/ directory.
+
+===Java===
+To build the java client:
+
+ $ mvn package
+
+The binary will be built to target/ directory. uber-mbus-client-x.x.x.jar is a jar that includes all dependencies. Alternatively, you can use mbus-client-x.x.x.jar that doesn't include the dependencies. You will need to find jars defined in the <dependencies> section of pom.xml to your classpath. The client will be published to public maven repository soon, after which you can use the jar by including mbus-client into your pom.xml.
+
+For instruction of how to publish/consume with the Java client, refer to README in java/
+
+===Ruby===
+See README.mediawiki in ruby/
