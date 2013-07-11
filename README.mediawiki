@@ -31,11 +31,56 @@ The server build is located in hornetq/build/hornetq-2.2.22.SNAPSHOT
 ===Configurate the server===
 '''hornetq-server/config''' directory contains several config files that you should be aware of. Refer to [[http://docs.jboss.org/hornetq/2.2.14.Final/user-manual/en/html/configuration-index.html|Hornetq Config]] for documentation of each config file. There are several mandatory fields required for a working cluster:
 
+#'''STOMP connector port'''. MessageBus uses STOMP protocol for communication between clients and servers, and you need to enable it by:
+    <acceptors>
+      ...
+      <acceptor name="stomp-acceptor">
+        <factory-class>org.hornetq.core.remoting.impl.netty.NettyAcceptorFactory</factory-class>
+         <param key="host"  value="${hornetq.remoting.netty.host:0.0.0.0}"/>
+        <param key="protocol" value="stomp" />
+        <param key="port" value="61613" />
+        <param key="use-nio" value="true" />
+      </acceptor>
+    </acceptors>
+
 #'''Persistence directories''' in '''hornetq-configuration.xml'''. You need to point the server to directories that store your journal, paging and bindings. Default is '''/var/hornetq/*'''. You need to create these directories before the server can be started.
 
    <paging-directory>/var/hornetq/paging</paging-directory>
    <bindings-directory>/var/hornetq/bindings</bindings-directory>
    <journal-directory>/var/hornetq/journal</journal-directory>
 
-#'''jmx directory'''. In log4j.properties, define the file jmx logs to. Below is the default:
+#'''Server log location'''. This is configured in logging.properties. You need to have the directory created. Default is:
+ java.util.logging.FileHandler.pattern=/var/hornetq/log/hornetq.log
+
+#'''jmx directory'''. In log4j.properties, define the file jmx logs to. You need to have the directory created. Default is:
  log4j.appender.jmx.File=/var/hornetq/log/jmx.log
+
+===Deploy the server===
+
+#Copy the built server to your broker host. After you complete '''Build the server''' section, the directory is located in hornetq/build/hornetq-2.2.22.SNAPSHOT
+
+#Copy your config file directory to your broker host. 
+
+#Run below. $CONFIG_DIR is the path to the config directory.
+ $>hornetq-2.2.22.SNAPSHOT/bin/run.sh $CONFIG_DIR
+
+===Cluster Control===
+The publishers and consumers have different visibility of the cluster nodes. This is for operational reason. For example, when you want to add a broker, you want to bring it to consumer list first before directing traffic to the new broker, in order to retain real-time delivery. For more about cluster management see [[https://engineering.groupon.com/2013/hornetq/building-a-distributed-messaging-system/|Building a Distributed Messaging System]].
+
+====Publiser Cluster Control====
+You will need a load balancer of your choice to direct traffic to your brokers. The purpose of the load balancer is to provide a single host name to distribute TCP/HTTP connections to your brokers. 
+
+MessageBus servers uses below ports, and you need to config your load balancer to direct traffic to each port:
+
+*STOMP connection port: 61613. This port accepts connections for transferring messages between the clients and the servers. This port can be configured in hornetq-configuration.xml.
+*JMX page port: 8081. This port provides JMX management through HTTP. If your host name is messagebus-hornetq1, then http://messagebus-hornetq1:8081 returns a list of all java beans for you to monitor and RPC. This port number is currently not configurable.
+*Health check port: 8083. If your host name is messagebus-hornetq1, then http://messagebus-hornetq1:8083/health returns either a 200 page or 404 page indicating whether the server is up. It reads ''bindings-directory/health.txt'' and returns 200 if exists and 404 otherwise.. ''rm'' or ''touch'' this file to manually control your load balancer. This port number is currently not configurable.
+
+====Consumer Cluster Control====
+The consumer calls the server on 8081 port for the list of brokers to consume from. It's a file with path: ''''bindings-directory/serverlist.txt''. If your broker list is messagebus-hornetq1, messagebus-hornetq2, messagebus-hornetq3, and the STOMP port is 61613, create this file and write following as content:
+
+ messagebus-hornetq1:61613
+ messagebus_hornetq2:61613
+ messagebus-hornetq3:61613
+
+The consumer is configured by default to get this file once every 5 minutes. You can change this file and wait this much time and expect your consumers are consuming from the new list.
