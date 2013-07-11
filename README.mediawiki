@@ -6,6 +6,9 @@ MessageBus is a distributed messaging platform built on top of hornetq, and supp
 Prerequisite: 
 * java 6 or higher
 * maven 2
+* ant
+
+Following steps assume you are in hornetq-server directory.
 
 ===Check out and patch server===
  $ ./checkout-hornetq.sh
