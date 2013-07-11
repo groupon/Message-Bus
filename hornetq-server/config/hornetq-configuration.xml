@@ -1,0 +1,101 @@
+<configuration xmlns="urn:hornetq"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="urn:hornetq /schema/hornetq-configuration.xsd">
+
+   <clustered>false</clustered>
+
+   <persistence-enabled>true</persistence-enabled>
+
+   <paging-directory>/var/hornetq/paging</paging-directory>
+
+   <bindings-directory>/var/hornetq/bindings</bindings-directory>
+
+   <journal-directory>/var/hornetq/journal</journal-directory>
+
+   <journal-min-files>10</journal-min-files>
+
+   <message-expiry-scan-period>-1</message-expiry-scan-period>
+
+   <journal-buffer-size>5242880</journal-buffer-size>
+
+   <journal-type>ASYNCIO</journal-type>
+
+   <thread-pool-max-size>30</thread-pool-max-size>
+
+   <large-messages-directory>/var/hornetq/large-messages</large-messages-directory>
+
+   <management-address>jms.queue.hornetq.management</management-address>
+
+   <connection-ttl-override>300000</connection-ttl-override>
+
+   <file-deployment-enabled>true</file-deployment-enabled>
+  
+   <connectors>
+      <connector name="netty">
+         <factory-class>org.hornetq.core.remoting.impl.netty.NettyConnectorFactory</factory-class>
+         <param key="host"  value="${hornetq.remoting.netty.host:0.0.0.0}"/>
+         <param key="port"  value="${hornetq.remoting.netty.port:5445}"/>
+      </connector>
+
+      <connector name="netty-throughput">
+         <factory-class>org.hornetq.core.remoting.impl.netty.NettyConnectorFactory</factory-class>
+         <param key="host"  value="${hornetq.remoting.netty.host:0.0.0.0}"/>
+         <param key="port"  value="${hornetq.remoting.netty.batch.port:5455}"/>
+         <param key="batch-delay" value="50"/>
+      </connector>
+   </connectors>
+
+   <acceptors>
+      <acceptor name="netty">
+         <factory-class>org.hornetq.core.remoting.impl.netty.NettyAcceptorFactory</factory-class>
+         <param key="host"  value="${hornetq.remoting.netty.host:0.0.0.0}"/>
+         <param key="port"  value="${hornetq.remoting.netty.port:5445}"/>
+      </acceptor>
+
+      <acceptor name="netty-throughput">
+         <factory-class>org.hornetq.core.remoting.impl.netty.NettyAcceptorFactory</factory-class>
+         <param key="host"  value="${hornetq.remoting.netty.host:0.0.0.0}"/>
+         <param key="port"  value="${hornetq.remoting.netty.batch.port:5455}"/>
+         <param key="batch-delay" value="50"/>
+         <param key="direct-deliver" value="false"/>
+      </acceptor>
+      <!-- the stomp-acceptor is configured for the Stomp protocol and -->
+      <!-- Will Listen on port 61613 (default Stomp port).             -->
+      <acceptor name="stomp-acceptor">
+        <factory-class>org.hornetq.core.remoting.impl.netty.NettyAcceptorFactory</factory-class>
+         <param key="host"  value="${hornetq.remoting.netty.host:0.0.0.0}"/>
+        <param key="protocol" value="stomp" />
+        <param key="port" value="61613" />
+        <param key="use-nio" value="true" />
+      </acceptor>
+   </acceptors>
+
+   <security-settings>
+      <security-setting match="#">
+         <permission type="createNonDurableQueue" roles="guest"/>
+         <permission type="deleteNonDurableQueue" roles="guest"/>
+         <permission type="createDurableQueue" roles="guest"/>
+         <permission type="deleteDurableQueue" roles="guest"/>
+         <permission type="consume" roles="guest"/>
+         <permission type="send" roles="guest"/>
+         <permission type="manage" roles="admin" />
+      </security-setting>
+   </security-settings>
+
+   <address-settings>
+      <!--default for catch all-->
+      <address-setting match="#">
+         <dead-letter-address>jms.queue.DLQ</dead-letter-address>
+         <expiry-address>jms.queue.ExpiryQueue</expiry-address>
+         <max-delivery-attempts>3</max-delivery-attempts>
+         <redelivery-delay>0</redelivery-delay>
+         <redistribution-delay>5000</redistribution-delay>
+         <max-size-bytes>54857600</max-size-bytes>
+         <page-size-bytes>10485760</page-size-bytes>
+         <message-counter-history-day-limit>10</message-counter-history-day-limit>
+         <address-full-policy>PAGE</address-full-policy>
+         <page-max-cache-size>100</page-max-cache-size>
+      </address-setting>
+   </address-settings>
+
+</configuration>

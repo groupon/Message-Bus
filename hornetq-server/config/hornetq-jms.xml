@@ -1,0 +1,68 @@
+<configuration xmlns="urn:hornetq"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:hornetq /schema/hornetq-jms.xsd">
+
+   <connection-factory name="NettyConnectionFactory">
+
+      <block-on-non-durable-send>true</block-on-non-durable-send>
+      <block-on-durable-send>true</block-on-durable-send>
+      <client-failure-check-period>60000</client-failure-check-period>
+      <block-on-acknowledge>true</block-on-acknowledge>
+      <producer-window-size>-1</producer-window-size>
+
+      <ha>true</ha>
+      <xa>true</xa>
+      <connectors>
+         <connector-ref connector-name="netty"/>
+      </connectors>
+      <entries>
+         <entry name="/XAConnectionFactory"/>
+      </entries>
+   </connection-factory>
+
+   <connection-factory name="NettyThroughputConnectionFactory">
+      <xa>true</xa>
+      <connectors>
+         <connector-ref connector-name="netty-throughput"/>
+      </connectors>
+      <entries>
+         <entry name="/XAThroughputConnectionFactory"/>
+      </entries>
+   </connection-factory>
+
+   <connection-factory name="NettyThroughputConnectionFactory">
+      <xa>false</xa>
+      <connectors>
+         <connector-ref connector-name="netty-throughput"/>
+      </connectors>
+      <entries>
+         <entry name="/ThroughputConnectionFactory"/>
+      </entries>
+   </connection-factory>
+
+
+   <queue name="DLQ">
+      <entry name="/queue/DLQ"/>
+   </queue>
+
+   <queue name="ExpiryQueue">
+      <entry name="/queue/ExpiryQueue"/>
+   </queue>
+
+   <queue name="PasswordResetQueue">
+      <entry name="/queue/PasswordResetQueue"/>
+   </queue>
+
+  <topic name="grouponTestTopic1">
+    <entry name="/topic/grouponTestTopic1"/>
+  </topic>
+  <topic name="grouponTestTopic2">
+    <entry name="/topic/grouponTestTopic2"/>
+  </topic>
+    <queue name="grouponTestQueue1">
+      <entry name="/queue/grouponTestQueue1"/>
+    </queue>
+    <queue name="grouponTestQueue2">
+      <entry name="/queue/grouponTestQueue2"/>
+    </queue>
+</configuration>
