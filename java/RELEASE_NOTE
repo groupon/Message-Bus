@@ -1,0 +1,3 @@
+1.2.5
+
+- Adds useDynamicServerList flag for ConsumerConfig. If this flag is true and dynamicServerListFetchURL is not present, the latter will be generated from hostParamSet. Default is true.

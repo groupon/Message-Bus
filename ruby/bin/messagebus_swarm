@@ -1,0 +1,77 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+
+require 'messagebus'
+require 'messagebus/swarm/controller'
+
+options = {
+  :requires => [],
+  :configuration_source => Messagebus::Swarm::Controller::ConfigurationSource.new(:default, nil)
+}
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: swarm [options] COMMAND"
+
+  opts.separator ""
+  opts.separator "Options:"
+
+  opts.on("--config_path PATH", "A path to a yaml configuration file") do |config_path|
+    options[:configuration_source] = Messagebus::Swarm::Controller::ConfigurationSource.new(:path, config_path)
+  end
+
+  opts.on("--config_eval RUBY_CODE", "Ruby that evaluates to a configuration hash. This is ran after any requires") do |config_eval|
+    options[:configuration_source] = Messagebus::Swarm::Controller::ConfigurationSource.new(:eval, config_eval)
+  end
+
+  opts.on("-h", "--help", "Show help message") do
+    puts opts
+  end
+
+  opts.on("-r", "--require FILE", "A file to require before starting the swarm. Repeatable.") do |file|
+    options[:requires] << file
+  end
+
+  opts.on("--pidfile PID_FILE", "A file to write the PID to") do |file|
+    options[:pidfile] = file
+  end
+
+  opts.separator ""
+  opts.separator "Commands:"
+  opts.separator "  start                   Start all workers in the configuration"
+  opts.separator "  start DESTINATION COUNT Start COUNT workers for DESTINATION swarm listeners"
+  opts.separator "  stop pid                Kill a swarm"
+  opts.separator ""
+end
+
+parser.parse!
+
+Messagebus::Swarm::Controller.require_files(options[:requires])
+if pidfile = options[:pidfile]
+  pid = Process.pid
+  Messagebus::Swarm::Controller.write_pid(pidfile)
+  at_exit do
+    # we need this check to make sure we only bother doing this if
+    # we are the parent process that's shutting down
+    # at_exit is carried down when forking
+    Messagebus::Swarm::Controller.delete_pid(pidfile) if Process.pid == pid
+  end
+end
+
+case ARGV[0]
+when 'start'
+  destination_name, drone_count = ARGV[1], ARGV[2]
+
+  log_file = options[:configuration_source].configuration_hash["worker_log_file"]
+  logger = log_file ? Logger.new(log_file) : Messagebus::Client.logger
+
+  Messagebus::Swarm::Controller.start(options[:configuration_source], logger, destination_name, drone_count)
+  exit(0)
+when 'stop'
+  pid = ARGV[1] or raise "Must specify a pid of the process to stop"
+  Messagebus::Swarm::Controller.stop(pid.to_i)
+  exit(0)
+else
+  puts parser.help
+  exit(1)
+end

@@ -1,0 +1,24 @@
+require "rubygems"
+require "rubygems/package_task"
+require "rspec/core/rake_task"
+
+SPEC = begin
+  file = File.expand_path(File.dirname(__FILE__) + '/messagebus.gemspec')
+  eval(File.read(file), binding, file)
+end
+
+Gem::PackageTask.new(SPEC) {}
+
+desc "Run all specs"
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = %w[--color --format=progress]
+  t.pattern = 'spec/**/*_spec.rb'
+end
+
+desc "Run code coverage"
+RSpec::Core::RakeTask.new(:coverage) do |t|
+  t.rspec_opts = %w[--color --format=progress]
+  t.rcov = true
+  t.rcov_opts = %w[--exclude='gems,spec']
+  t.pattern = 'spec/**/*_spec.rb'
+end

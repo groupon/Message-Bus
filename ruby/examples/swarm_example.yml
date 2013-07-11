@@ -1,0 +1,29 @@
+enable_auto_init_connections: true 
+log_file: log/messagebus-client.log
+
+:swarm_config:
+  # :fork: true
+
+:workers:
+  -
+    :destination: jms.topic.grouponTestTopic2
+    :worker: SimpleWorker
+    :subscription_id: lin
+
+    :ack_on_error: false
+    :drones: 2
+
+:cluster_defaults:
+  :user: rocketman
+  :passwd: rocketman
+  :receipt_wait_timeout_ms: 1500
+  :conn_lifetime_sec: 300
+  :enable_dynamic_serverlist_fetch: true
+
+clusters:
+  -
+    name: orders-messagebus-cluster
+    producer_address: mbus-staging-lb1:61613
+    consumer_address: mbus-staging-lb1:61613
+    destinations:
+      - jms.topic.grouponTestTopic2

@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+base = File.dirname(__FILE__)
+$:.unshift File.expand_path(File.join(base, "..", "lib"))
+
+require "irb"
+require "yaml"
+require "messagebus"
+
+IRB.start
+
