@@ -78,7 +78,7 @@ MessageBus servers uses below ports, and you need to config your load balancer t
 The consumer calls the server on 8081 port for the list of brokers to consume from. It's a file at '''bindings-directory/serverlist.txt'''. If your broker list is messagebus-hornetq1, messagebus-hornetq2, messagebus-hornetq3, and the STOMP port is 61613, create this file and write following:
 
  messagebus-hornetq1:61613
- messagebus_hornetq2:61613
+ messagebus-hornetq2:61613
  messagebus-hornetq3:61613
 
 The consumer is configured by default to get this file once every 5 minutes and refreshes connections. You can change this file and wait this much time and expect your consumers are consuming from the new list.
