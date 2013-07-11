@@ -42,27 +42,25 @@ The server build is located in hornetq/build/hornetq-2.2.22.SNAPSHOT
         <param key="use-nio" value="true" />
       </acceptor>
     </acceptors>
-
 #'''Persistence directories''' in '''hornetq-configuration.xml'''. You need to point the server to directories that store your journal, paging and bindings. Default is '''/var/hornetq/*'''. You need to create these directories before the server can be started.
-
    <paging-directory>/var/hornetq/paging</paging-directory>
    <bindings-directory>/var/hornetq/bindings</bindings-directory>
    <journal-directory>/var/hornetq/journal</journal-directory>
-
 #'''Server log location'''. This is configured in logging.properties. You need to have the directory created. Default is:
  java.util.logging.FileHandler.pattern=/var/hornetq/log/hornetq.log
-
 #'''jmx directory'''. In log4j.properties, define the file jmx logs to. You need to have the directory created. Default is:
  log4j.appender.jmx.File=/var/hornetq/log/jmx.log
 
 ===Deploy the server===
+
+Prerequisite: java 6 or higher.
 
 #Copy the built server to your broker host. After you complete '''Build the server''' section, the directory is located in hornetq/build/hornetq-2.2.22.SNAPSHOT
 
 #Copy your config file directory to your broker host. 
 
 #Run below. $CONFIG_DIR is the path to the config directory.
- $>hornetq-2.2.22.SNAPSHOT/bin/run.sh $CONFIG_DIR
+ $ hornetq-2.2.22.SNAPSHOT/bin/run.sh $CONFIG_DIR
 
 ===Cluster Control===
 The publishers and consumers have different visibility of the cluster nodes. This is for operational reason. For example, when you want to add a broker, you want to bring it to consumer list first before directing traffic to the new broker, in order to retain real-time delivery. For more about cluster management see [[https://engineering.groupon.com/2013/hornetq/building-a-distributed-messaging-system/|Building a Distributed Messaging System]].
