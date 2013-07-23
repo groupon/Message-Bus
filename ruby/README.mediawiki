@@ -144,10 +144,10 @@ The tail will start displaying new log messages.
 
 
 == Consuming messages ==
-You have 2 options. Option 1 is write your own consumer class. See [https://github.groupondev.com/dpe/ruby-messagebus/blob/master/test_driver/test3_publish_consume_topic.rb]
+You have 2 options. Option 1 is write your own consumer class. See [[https://github.groupondev.com/prod-tools/MessageBus/blob/master/ruby/examples/consumer_topic_example.rb|consumer_topic_example.rb]]
 for how to write your own consumer.
 
-Your other option is to use the Message Swarm code. Try examples/swarm_example.sh. See [[https://github.groupondev.com/dpe/ruby-messagebus/wiki|the swarm guide]] for more on that.
+Your other option is to use the Message Swarm code. Try examples/swarm_example.sh. See [[https://github.groupondev.com/prod-tools/MessageBus/wiki/Swarm-Consumer|Swarm Guide]] for more on that.
 
 == More detail needed? ==
 
