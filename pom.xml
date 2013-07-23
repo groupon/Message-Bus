@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.groupon.messagebus</groupId>
+    <artifactId>MessageBus</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>A distributed messaging platform</description>
+
+    <name>MessageBus</name>
+    <packaging>pom</packaging>
+    <url>http://engineering.groupon.com</url>
+
+    <licenses>
+      <license>
+	<name>The BSD 3-Clause License</name>
+        <url>http://opensource.org/licenses/BSD-3-Clause</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+
+    <scm>
+      <url>https://github.groupondev.com/prod-tools/MessageBus</url>
+      <connection>scm:git:git@github.groupondev.com:prod-tools/MessageBus.git</connection>
+    </scm>
+
+    <developers>
+      <developer>
+	<id>lin</id>
+	<name>Lin Zhao</name>
+	<email>lin@groupon.com</email>
+      </developer>
+      <developer>
+	<id>pjawahar</id>
+	<name>Pradeep Jawahar</name>
+	<email>pjawahar@groupon.com</email>
+      </developer>
+      <developer>
+	<id>eweathers</id>
+	<name>Erik Weathers</name>
+	<email>eweathers@groupon.com</email>
+      </developer>
+    </developers>
+
+    <modules>
+      <module>mbus-java</module>
+    </modules>
+
+    <build>
+    </build>
+    <dependencies>
+    </dependencies>
+</project>

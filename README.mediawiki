@@ -87,16 +87,10 @@ The consumer is configured by default to get this file once every 5 minutes and 
 Java and Ruby clients are currnetly supported, located in java/ and ruby/ directory.
 
 ===Java===
-To build the java client:
-
- $ mvn package
-
-The binary will be built to target/ directory. uber-mbus-client-x.x.x.jar is a jar that includes all dependencies. Alternatively, you can use mbus-client-x.x.x.jar that doesn't include the dependencies. You will need to find jars defined in the <dependencies> section of pom.xml to your classpath. The client will be published to public maven repository soon, after which you can use the jar by including mbus-client into your pom.xml.
-
-For instruction of how to publish/consume with the Java client, refer to README in java/
+See README.mediawiki in mbus-java/
 
 ===Ruby===
-See README.mediawiki in ruby/
+See README.mediawiki in mbus-ruby/
 
 ==License==
     Copyright (c) 2013, Groupon, Inc.

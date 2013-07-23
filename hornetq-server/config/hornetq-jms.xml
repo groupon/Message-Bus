@@ -53,16 +53,16 @@
       <entry name="/queue/PasswordResetQueue"/>
    </queue>
 
-  <topic name="grouponTestTopic1">
-    <entry name="/topic/grouponTestTopic1"/>
+  <topic name="testTopic1">
+    <entry name="/topic/testTopic1"/>
   </topic>
-  <topic name="grouponTestTopic2">
-    <entry name="/topic/grouponTestTopic2"/>
+  <topic name="testTopic2">
+    <entry name="/topic/testTopic2"/>
   </topic>
-    <queue name="grouponTestQueue1">
-      <entry name="/queue/grouponTestQueue1"/>
+    <queue name="testQueue1">
+      <entry name="/queue/testQueue1"/>
     </queue>
-    <queue name="grouponTestQueue2">
-      <entry name="/queue/grouponTestQueue2"/>
+    <queue name="testQueue2">
+      <entry name="/queue/testQueue2"/>
     </queue>
 </configuration>
