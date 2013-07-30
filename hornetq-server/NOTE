@@ -1,0 +1,5 @@
+This server patch contains modifications to HornetQ server including:
+1. JMX to HTML porting.
+2. Exposes consumer server list as JMX HTTP RPC.
+3. Have the server periodically recycles unacknowledged messages instead of waiting for connection reset to free the resource. This is bound to the client's pull-like API.
+4. Retrieve real message count from PageStore.
