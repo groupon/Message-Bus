@@ -19,7 +19,6 @@ We will release the jar to Maven central soon so you can declare mbus-client as 
 ===Quick start with ProducerExample and ConsumerExample===
 You can try publishing and consuming example messages with com.groupon.messagebus.client.examples.ProducerExample/ConsumerExample. Note that this example publishes generated messages. It can be used to test connection with your servers. See next section for guidance of implementing your publisher/consumer.
 
-<<<<<<< HEAD
 *Create producer_example.properties as:
 
  server={Host name. DNS to your load balancer if you use one.}
@@ -45,52 +44,13 @@ You can try publishing and consuming example messages with com.groupon.messagebu
   $java -cp uber-mbus-client-xxx.jar com.groupon.messagebus.client.examples.ProducerExample producer_example.properties
 
 *To consume:
-=======
-*Create producer_example.properties with:
-
- server={Host name. DNS to your load balancer if you use one.}
- port={Port number. default:61613}
- dest_type=TOPIC
- dest_name=jms.topic.{A Topic}
- msg_count=30000
- msg_size=10000
-  
-*Create consumer_example.properties with:
-
- server={Host name. DNS to your load balancer if you use one.}
- port={Port number. default:61613}
- dest_type=TOPIC
- dest_name=jms.topic.{A Topic}
- msg_count=2000000
- msg_size=1024
- subscription_id={A subscription identifier.}
- rcv_timeout=5000
- use_dynamic_servers={true if your servers are running in cluster mode. false otherwise.}
-
-*To publish: 
-  $java -cp uber-mbus-client-xxx.jar com.groupon.messagebus.client.examples.ProducerExample producer_example.properties
-
-<<<<<<< HEAD
-*To consume run:
->>>>>>> 149052e... java README writing.
-=======
-*To consume:
->>>>>>> 799d292... mbus-java README change.
   $java -cp uber-mbus-client-xxx.jar com.groupon.messagebus.client.examples.ConsumerExample consumer_example.properties
 
 ===Publish Message===
 To publish messages, you need to use com.groupon.messagebus.api.ProducerConfig and com.groupon.messagebus.client.ProducerImpl. Simple example:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
  import com.groupon.messagebus.api.*;
  import com.groupon.messagebus.client.*;
-=======
-
- import com.groupon.messagebus.api.*;
- import import com.groupon.messagebus.client.*;
->>>>>>> d7548b9... java README change
  ...
  ProducerConfig config = new ProducerConfig();
  HostParams host = new HostParams("hornetq-server-lb", 61613);
@@ -106,96 +66,14 @@ To publish messages, you need to use com.groupon.messagebus.api.ProducerConfig a
      e.printStackTrace();
  }
  producer.stop();
-<<<<<<< HEAD
-=======
-[[code type="java"]]
-=======
 
->>>>>>> 799d292... mbus-java README change.
-  import com.groupon.messagebus.api.*;
-  import import com.groupon.messagebus.client.*;
-  ...
-    ProducerConfig config = new ProducerConfig();
-    HostParams host = new HostParams("hornetq-server-lb", 61613);
-    config.setBroker(host);
-    config.setDestinationType(DestinationType.TOPIC);
-    config.setDestinationName("jms.topic.testTopic1");
-    Producer producer = new ProducerImpl();
-    producer.start(config);
-    Message message = Message.createStringMessage( "All work and no play makes jack a dull boy" );
-    try {
-        producer.sendSafe(message, headers);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    producer.stop();
-=======
->>>>>>> d7548b9... java README change
-
-<<<<<<< HEAD
-  ...
-[[/code]]
->>>>>>> 149052e... java README writing.
-
-=======
->>>>>>> 799d292... mbus-java README change.
 You can also check out com.groupon.messagebus.client.examples.ProducerExample for more sophisticated example.
 
 ===Consumer Message===
 To consume messages, you config with com.groupon.messagebus.api.ConsumerConfig and uses com.groupon.messagebus.client.ConsumerConfig. You usually put consumer.Receive method inside a while loop and handle messages when one comes. Simple example:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
- import com.groupon.messagebus.api.*;
- import import com.groupon.messagebus.client.*;
- ...  
-=======
- import com.groupon.messagebus.api.*;
- import import com.groupon.messagebus.client.*;
- ...
-  
->>>>>>> d7548b9... java README change
- ConsumerConfig config = new ConsumerConfig();
- //Although the consumers connects to all hosts in the cluster, you only need to set the LB here.
- HostParams host = new HostParams("hornetq-server-lb", 61613);
- Set<HostParams> hostsList = new HashSet<HostParams>();
- hostsList.add(host);
- config.setHostParams(hostsList);
- Consumer con = new ConsumerImpl();
- con.start(config);
- try{
-     while(true){
-         Message tmp = con.receive();
-         MessagePayloadType type = tmp.getMessagePayloadType();
-         switch(type){
-<<<<<<< HEAD
-             case MessagePayloadType.BINARY:
-                 System.out.println(new String(tmp.getBinaryPayload()));
-                 break;
-=======
-	     case MessagePayloadType.BINARY) 
-                 System.out.println(new String(tmp.getBinaryPayload()));
-	         break;
->>>>>>> d7548b9... java README change
-             case MessagePayloadType.JSON:
-                 System.out.println(tmp.getJSONStringPayload());
-                 break;
-             case MessagePayloadType.STRING:
-                 System.out.println(tmp.getStringPayload());
-                 break;
-         }
-<<<<<<< HEAD
-      }
- }finally{
-      con.stop();
- }
-=======
-[[code type="java"]]
-=======
->>>>>>> 799d292... mbus-java README change.
   import com.groupon.messagebus.api.*;
-  import import com.groupon.messagebus.client.*;
+  import com.groupon.messagebus.client.*;
   ...
   ConsumerConfig config = new ConsumerConfig();
   //Although the consumers connects to all hosts in the cluster, you only need to set the LB here.
@@ -208,33 +86,25 @@ To consume messages, you config with com.groupon.messagebus.api.ConsumerConfig a
   try{
       while(true){
           Message tmp = con.receive();
-	  MessagePayloadType type = tmp.getMessagePayloadType();
+          MessagePayloadType type = tmp.getMessagePayloadType();
           switch(type){
-	      case MessagePayloadType.BINARY) 
+                case MessagePayloadType.BINARY) 
                 System.out.println(new String(tmp.getBinaryPayload()));
-		break;
+                break;
               case MessagePayloadType.JSON:
                 System.out.println(tmp.getJSONStringPayload());
                 break;
               case MessagePayloadType.STRING:
                 System.out.println(tmp.getStringPayload());
-		break;
-	  }
+                break;
+          }
       }
-    
   }finally{
     con.stop();
   }
-<<<<<<< HEAD
-[[/code]]
->>>>>>> 149052e... java README writing.
-=======
->>>>>>> 799d292... mbus-java README change.
-=======
       }
  }finally{
       con.stop();
  }
->>>>>>> d7548b9... java README change
 
 You can also check out com.groupon.messagebus.client.examples.ConsumerExample for more sophisticated example.
