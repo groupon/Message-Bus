@@ -19,8 +19,8 @@
     </licenses>
 
     <scm>
-      <url>https://github.groupondev.com/prod-tools/MessageBus</url>
-      <connection>scm:git:git@github.groupondev.com:prod-tools/MessageBus.git</connection>
+      <url>https://github.com/groupon/Message-Bus</url>
+      <connection>scm:git:git@github.com:groupon/Message-Bus.git</connection>
     </scm>
 
     <developers>

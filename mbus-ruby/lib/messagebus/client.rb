@@ -97,19 +97,6 @@ module Messagebus
     end
 
     def publish(destination_name, object, delay_ms = 0, safe = true, binary = false, headers = {})
-      # this is a hack to debug some issues in orders. See Lin Zhao
-      # or Kyle O for more.
-      if @enable_client_logger_thread_debugging
-        logger.info "Message publishing to #{destination_name}. Threads: #{Thread.list.map { |t| t.object_id }.join(',')}"
-
-        if (mutex = Messagebus::Client.logger.instance_variable_get( "@mutex")) &&
-           (mon_owner = mutex.instance_variable_get("@mon_owner")) &&
-           (mon_owner != Thread.current)
-
-          raise "Publishing thead doesn't own the logger. This can't be happening! mon_owner-#{mon_owner.object_id}. " +
-                "Threads currently running are: #{Thread.list.map { |t| t.object_id }.join(',')}"
-        end
-      end
 
       if !(@config.enable_auto_init_connections)
         logger.warn "Config['enable_auto_init_connections'] is false, not publishing destination_name=#{destination_name}, message_contents=#{object.inspect}"

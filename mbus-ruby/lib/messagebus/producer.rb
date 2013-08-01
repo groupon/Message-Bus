@@ -117,7 +117,7 @@ module Messagebus
       connect_headers = connect_headers.merge(PUBLISH_HEADERS)
       if not safe_mode
         @stomp.publish(dest, message.to_thrift_binary, connect_headers)
-        return
+        return true
       else
         receipt_received = false
         errors_received = nil

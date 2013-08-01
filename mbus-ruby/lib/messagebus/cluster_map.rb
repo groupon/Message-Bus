@@ -131,8 +131,8 @@ module Messagebus
       cluster.producer_address,
       :user => cluster.user,
       :passwd => cluster.passwd,
-      :receipt_wait_timeout_ms => cluster.receipt_wait_timeout_ms,
-      :conn_lifetime_sec => cluster.conn_lifetime_sec
+      :receipt_wait_timeout_ms => cluster.receipt_wait_timeout_ms || 5000,
+      :conn_lifetime_sec => cluster.conn_lifetime_sec || 300
       )
       cluster_producer_map[cluster.name] = producer
       
