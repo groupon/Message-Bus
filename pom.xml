@@ -18,9 +18,16 @@
       </license>
     </licenses>
 
+    <parent>
+      <groupId>org.codehaus</groupId>
+      <artifactId>codehaus-parent</artifactId>
+      <version>4</version>
+    </parent>
+
     <scm>
       <url>https://github.com/groupon/Message-Bus</url>
       <connection>scm:git:git@github.com:groupon/Message-Bus.git</connection>
+      <developerConnection>scm:git:git@github.com:groupon/Message-Bus.git</developerConnection>
     </scm>
 
     <developers>

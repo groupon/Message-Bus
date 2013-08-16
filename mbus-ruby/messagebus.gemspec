@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["pjawahar@groupon.com", "lin@groupon.com", "eweathers@groupon.com"]
   gem.description   = %q{Messagebus integration gem}
   gem.summary       = %q{Messagebus Client}
-  gem.homepage      = "https://github.groupondev.com/dpe/ruby-messagebus"
+  gem.homepage      = "https://github.com/groupon/Message-Bus"
 
   gem.executables   = %w(messagebus_swarm)
   gem.files         = Dir['bin/*'] + Dir["lib/**/*.rb"] + Dir["vendor/**/*"] + %w(README.mediawiki Rakefile messagebus.gemspec)
@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "messagebus"
   gem.require_paths = ["vendor/gems", "lib"]
   gem.version       = Messagebus::VERSION
+  gem.license       = 'BSD'
 
   gem.required_rubygems_version = ">= 1.3.6"
 
