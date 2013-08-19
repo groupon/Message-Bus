@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.executables   = %w(messagebus_swarm)
   gem.files         = Dir['bin/*'] + Dir["lib/**/*.rb"] + Dir["vendor/**/*"] + %w(README.mediawiki Rakefile messagebus.gemspec)
   gem.test_files    = Dir["spec*/**/*.rb"]
-  gem.name          = "messagebus"
+  gem.name          = "mbus"
   gem.require_paths = ["vendor/gems", "lib"]
   gem.version       = Messagebus::VERSION
   gem.license       = 'BSD'
