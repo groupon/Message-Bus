@@ -4,7 +4,7 @@ A gem for publishing and consuming hornetq messagebus messages.
 
 == Installation ==
 
-  $ gem install messagebus
+  $ gem install mbus
 
 == Dependencies ==
 
