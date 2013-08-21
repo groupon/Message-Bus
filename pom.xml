@@ -18,11 +18,11 @@
       </license>
     </licenses>
 
-    <parent>
-      <groupId>org.codehaus</groupId>
-      <artifactId>codehaus-parent</artifactId>
-      <version>4</version>
-    </parent>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
 
     <scm>
       <url>https://github.com/groupon/Message-Bus</url>
