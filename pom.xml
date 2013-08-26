@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.groupon.messagebus</groupId>
     <artifactId>MessageBus</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <description>A distributed messaging platform</description>
 
     <name>MessageBus</name>
