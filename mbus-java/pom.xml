@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.groupon.messagebus.MessageBus</groupId>
+    <groupId>com.groupon.messagebus</groupId>
     <artifactId>messagebus-client</artifactId>
     <version>1.2.6-SNAPSHOT</version>
     <description>Java client to use for MessageBus hornetq servers</description>
