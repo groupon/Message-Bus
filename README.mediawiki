@@ -65,7 +65,7 @@ Prerequisite: java 6 or higher.
 ===Cluster Control===
 The publishers and consumers have different visibility of the cluster nodes. This is for operational reason. For example, when you want to add a broker, you want to bring it to consumer list first before directing traffic to the new broker, in order to retain real-time delivery. For more about cluster management see [[https://engineering.groupon.com/2013/hornetq/building-a-distributed-messaging-system/|Building a Distributed Messaging System]].
 
-====Publiser Cluster Control====
+====Publisher Cluster Control====
 You will need a load balancer of your choice to direct traffic to your brokers. The purpose of the load balancer is to provide a single host name to distribute TCP/HTTP connections to your brokers. [[http://www.a10networks.com/|A10]] is a good hardware solution. A good software solution is [[Haproxy|http://haproxy.1wt.eu/]].
 
 MessageBus servers uses below ports, and you need to config your load balancer to direct traffic to each port:
