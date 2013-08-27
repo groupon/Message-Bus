@@ -1,4 +1,4 @@
-=mbus-client=
+=messagebus-client=
 
 Java client for MessageBus.
 
@@ -11,11 +11,18 @@ Prerequisite:
 
 The binaries will be built under target/. 
 
-uber-mbus-client-x.x.x.jar is a jar that includes all dependencies and can be included to your classpath for usage. This may result in dependency conflict with other dependencies in your project. mbus-client-x.x.x.jar doesn't include dependencies. We have also published the jar to public maven repository. Search for mbus-client there to get the latest version to include to your project (via pom.xml).
-
-We will release the jar to Maven central soon so you can declare mbus-client as a dependency.
+uber-mbus-client-x.x.x.jar is a jar that includes all dependencies and can be included to your classpath for usage. This may result in dependency conflict with other dependencies in your project. messagebus-client-x.x.x.jar doesn't include dependencies. We have also published the jar to public maven repository. Search for messagebus-client there to get the latest version to include to your project (via pom.xml).
 
 ==Usage==
+===Include messagebus-client to your Maven project===
+messagebus-client is deployed to Maven Central. Add following dependency to your pom.xml.
+
+  <dependency>
+    <groupId>com.groupon.messagebus</groupId>
+    <artifactId>messagebus-client</artifactId>
+    <version>x.x.x</version>
+  </dependency>
+
 ===Quick start with ProducerExample and ConsumerExample===
 You can try publishing and consuming example messages with com.groupon.messagebus.client.examples.ProducerExample/ConsumerExample. Note that this example publishes generated messages. It can be used to test connection with your servers. See next section for guidance of implementing your publisher/consumer.
 
